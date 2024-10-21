@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Manager</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            color: #333;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        input {
+            padding: 8px;
+            width: 100%;
+            max-width: 300px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        h2 {
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <h1>Loan Manager</h1>
+    <div>
+        <label for="employeeIncome">Monthly Income:</label>
+        <input type="number" id="employeeIncome" placeholder="Enter monthly income" />
+    </div>
+    <div>
+        <label for="accountBalance">Account Balance:</label>
+        <input type="number" id="accountBalance" placeholder="Enter account balance" />
+    </div>
+    <div>
+        <label for="loanAmount">Loan Amount:</label>
+        <input type="number" id="loanAmount" placeholder="Enter loan amount" />
+    </div>
+    <button onclick="applyLoan()">Apply for Loan</button>
+    <h2 id="result"></h2>
+
+    <script>
+
+        const LoanManager = {
+            loans: [],
+
+            applyLoan: function(employeeIncome, accountBalance, loanAmount) {
+                if (employeeIncome >= 30000 && accountBalance >= loanAmount * 0.1) {
+                    const loan = {
+                        employeeIncome: employeeIncome,
+                        accountBalance: accountBalance,
+                        loanAmount: loanAmount,
+                        status: 'Approved'
+                    };
+                    this.loans.push(loan);
+                    return 'Loan approved!';
+                } else {
+                    return 'Loan rejected due to eligibility criteria.';
+                }
+            }
+        };
+
+        function applyLoan() {
+            const employeeIncome = parseFloat(document.getElementById('employeeIncome').value);
+            const accountBalance = parseFloat(document.getElementById('accountBalance').value);
+            const loanAmount = parseFloat(document.getElementById('loanAmount').value);
+
+            if (!isNaN(employeeIncome) && !isNaN(accountBalance) && !isNaN(loanAmount)) {
+                const result = LoanManager.applyLoan(employeeIncome, accountBalance, loanAmount);
+                document.getElementById('result').innerText = result;
+            } else {
+                document.getElementById('result').innerText = 'Please enter valid values.';
+            }
+        }
+    </script>
+</body>
+</html>

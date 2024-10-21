@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Account Management</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            color: #333;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        input {
+            padding: 8px;
+            width: 100%;
+            max-width: 300px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        h2 {
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <h1>Bank Account Management</h1>
+    <div>
+        <label for="accountNumber">Account Number:</label>
+        <input type="text" id="accountNumber" placeholder="Enter account number" />
+    </div>
+    <div>
+        <label for="accountHolderName">Account Holder Name:</label>
+        <input type="text" id="accountHolderName" placeholder="Enter holder name" />
+    </div>
+    <div>
+        <label for="depositAmount">Deposit Amount:</label>
+        <input type="number" id="depositAmount" placeholder="Enter amount to deposit" />
+    </div>
+    <div>
+        <label for="withdrawAmount">Withdraw Amount:</label>
+        <input type="number" id="withdrawAmount" placeholder="Enter amount to withdraw" />
+    </div>
+    <button onclick="createAccount()">Create Account</button>
+    <button onclick="deposit()">Deposit</button>
+    <button onclick="withdraw()">Withdraw</button>
+    <button onclick="checkBalance()">Check Balance</button>
+    <h2 id="result"></h2>
+
+    <script>
+        
+        const BankAccount = {
+            accountNumber: '',
+            accountHolderName: '',
+            balance: 0,
+
+            deposit: function(amount) {
+                this.balance += amount;
+            },
+
+            withdraw: function(amount) {
+                if (amount > this.balance) {
+                    return 'Insufficient funds.';
+                }
+                this.balance -= amount;
+            },
+
+            checkBalance: function() {
+                return this.balance;
+            }
+        };
+
+        function createAccount() {
+            BankAccount.accountNumber = document.getElementById('accountNumber').value;
+            BankAccount.accountHolderName = document.getElementById('accountHolderName').value;
+            BankAccount.balance = 0; // Initial balance
+            document.getElementById('result').innerText = `Account created for ${BankAccount.accountHolderName}.`;
+        }
+
+        function deposit() {
+            const amount = parseFloat(document.getElementById('depositAmount').value);
+            if (!isNaN(amount) && amount > 0) {
+                BankAccount.deposit(amount);
+                document.getElementById('result').innerText = `Deposited: $${amount}. New balance: $${BankAccount.checkBalance()}.`;
+            } else {
+                document.getElementById('result').innerText = 'Please enter a valid deposit amount.';
+            }
+        }
+
+        function withdraw() {
+            const amount = parseFloat(document.getElementById('withdrawAmount').value);
+            if (!isNaN(amount) && amount > 0) {
+                const message = BankAccount.withdraw(amount);
+                if (message) {
+                    document.getElementById('result').innerText = message;
+                } else {
+                    document.getElementById('result').innerText = `Withdrew: $${amount}. New balance: $${BankAccount.checkBalance()}.`;
+                }
+            } else {
+                document.getElementById('result').innerText = 'Please enter a valid withdraw amount.';
+            }
+        }
+
+        function checkBalance() {
+            document.getElementById('result').innerText = `Current balance: $${BankAccount.checkBalance()}.`;
+        }
+    </script>
+</body>
+</html>

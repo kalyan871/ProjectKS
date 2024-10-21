@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salary Calculator</title>
+</head>
+<body>
+    <h1>Salary Calculator</h1>
+    <form id="salaryForm">
+        <label for="deductions">Enter deductions amount:</label>
+        <input type="number" id="deductions" name="deductions" required>
+        <button type="button" onclick="calculateSalary()">Calculate Salary</button>
+    </form>
+    <p id="result"></p>
+
+    <script>
+        function calculateSalary() {
+            // Fixed monthly salary
+            const fixedSalary = 25000;
+
+            // Get the deductions value from the input
+            const deductions = parseFloat(document.getElementById('deductions').value);
+
+            // Calculate the net salary
+            const netSalary = fixedSalary - deductions;
+
+            // Display the result
+            const netSalary = fixedSalary - deductions;
+
+// Display the result
+document.getElementById('result').innerText = Net Salary: $${netSalary.toFixed(2)};
+}
+</script>
+</body>
+</html>
